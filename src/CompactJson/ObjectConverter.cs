@@ -466,26 +466,22 @@ namespace CompactJson
 
             public void PropertyName(string propertyName)
             {
-                if (mPropList.Length < 10)
+                for (int i = 0; i < mPropList.Length; i++)
                 {
-                    for (int i = 0; i < mPropList.Length; i++)
-                    {
-                        PropInfo pi = mPropList[mLastPropertyIndex];
-                        mLastPropertyIndex++;
-                        if (mLastPropertyIndex == mPropList.Length)
-                            mLastPropertyIndex = 0;
+                    PropInfo pi = mPropList[mLastPropertyIndex];
+                    mLastPropertyIndex++;
+                    if (mLastPropertyIndex == mPropList.Length)
+                        mLastPropertyIndex = 0;
 
-                        if (pi.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            mValidProperty = true;
-                            mCurrentPropInfo = pi;
-                            return;
-                        }
+                    if (pi.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        mValidProperty = true;
+                        mCurrentPropInfo = pi;
+                        return;
                     }
-                    mValidProperty = false;
-                    return;
                 }
-                mValidProperty = mProps.TryGetValue(propertyName, out mCurrentPropInfo);
+                mValidProperty = false;
+                return;
             }
 
             public void String(string value)
